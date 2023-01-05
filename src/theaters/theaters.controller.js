@@ -4,6 +4,11 @@ const reduceProperties = require("../utils/reduce-properties")
 
 
 async function list(req,res){
+    if(res.locals.movie){
+        const data = await theatersService.list(res.locals.movie)
+        res.json({data})
+    }
+
     const data = await theatersService.list()
     const reduceMovies = reduceProperties("theater_id", {
         movie_id: ["movies", null, "movie_id"],
