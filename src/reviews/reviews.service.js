@@ -9,6 +9,12 @@ const addCritic = mapProperties({
     // updated_at: "critic.updated_at"
 })
 
+function list(){
+    return knex("reviews as r")
+            .join("critics as c", "r.critic_id", "c.critic_id")
+            .select("r.*","c.*")
+}
+
 //there is no endpoint for GET /reviews/:reviewId so this read service function will be used to confirm that the review exist in reviewExist middleware and used to join/create the critics nested obj for displaying the updated review
 function read(reviewId){
     return knex("reviews as r")
@@ -31,6 +37,7 @@ function update(updatedReview){
 }
 
 module.exports = {
+    list,
     read,
     delete : destroy,
     update
